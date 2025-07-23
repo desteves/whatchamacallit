@@ -13,9 +13,4 @@ services:
       - ./init:/docker-entrypoint-initdb.d
 volumes:
   mongo-data:
-
-# To import the mflix sample dataset after the container is running:
-# 1. Download the mflix dataset
-# 2. Unzip and use:
-#    mongoimport --uri "mongodb://root:password@localhost:27017/mflix?authSource=admin" --collection movies --file movies.json --jsonArray
-# (You can run this from your host or inside the container) 
+#    mongoimport --uri "mongodb://localhost:27017/sample_mflix" --collection embedded_movies --file ../sample_mflix.embedded_movies.json --jsonArray
