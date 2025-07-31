@@ -19,10 +19,25 @@ app.get('/api/movies', async (req, res) => {
   const { title } = req.query;
   if (!title) return res.status(400).json({ error: 'Missing title query param' });
   try {
-    const movies = await Movie.find({ title: { $regex: title, $options: 'i' } }).limit(20);
+    const movies = await Movie.find({ title: { $regex: title, $options: 'i' } })
+      .limit(20)
+      .select('title year genres poster');
     res.json(movies);
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch movies' });
+  }
+});
+
+app.get('/api/movies/:id', async (req, res) => {
+  try {
+    console.log('Movie ID:', req.params.id);
+    const movie = await Movie.findById(req.params.id);
+    if (!movie) {
+      return res.status(404).json({ error: 'Movie not found' });
+    }
+    res.json(movie);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch movie details' });
   }
 });
 
