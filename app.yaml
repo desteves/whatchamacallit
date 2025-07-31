@@ -1,0 +1,50 @@
+name: whatchamacallit
+region: nyc
+services:
+- name: backend
+  github:
+    branch: main
+    repo: desteves/whatchamacallit
+    deploy_on_push: true
+  source_dir: /backend
+  envs:
+  - key: NODE_ENV
+    value: production
+  - key: PORT
+    value: 3001
+  - key: MONGODB_URI
+    type: SECRET
+    value: ${MONGODB_URI}
+  http_port: 3001
+  instance_size_slug: basic-xxs
+  instance_count: 1
+  run_command: npm start
+
+- name: frontend
+  github:
+    branch: main
+    repo: desteves/whatchamacallit
+    deploy_on_push: true
+  source_dir: /frontend
+  envs:
+  - key: VITE_API_URL
+    value: https://backend-${APP_DOMAIN}
+  - key: VITE_BASE_URL
+    value: /
+  routes:
+  - path: /
+  static_sites:
+    output_dir: dist
+    index_document: index.html
+    error_document: index.html
+  instance_size_slug: basic-xxs
+  instance_count: 1
+
+databases:
+- engine: MONGODB
+  name: mongo-db
+  version: "6.0"
+  production: false
+  size: db-s-dev-database
+  num_nodes: 1
+  region: nyc

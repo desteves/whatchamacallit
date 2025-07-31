@@ -2,6 +2,14 @@
 
 A movie recommendation chat bot powered by MongoDB and DigitalOcean
 
+## Local Development
+
+### Prerequisites
+
+- Node.js (v16 or later)
+- npm (v8 or later)
+- Docker and Docker Compose (for running MongoDB in a container)
+
 ## Getting Started
 
 ### Prerequisites

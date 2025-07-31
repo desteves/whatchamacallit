@@ -19,7 +19,8 @@ export default {
       this.loading = true;
       this.error = '';
       try {
-        const res = await axios.get('http://localhost:3001/api/movies', {
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+        const res = await axios.get(`${apiUrl}/api/movies`, {
           params: { title: this.search }
         });
         this.movies = res.data;
